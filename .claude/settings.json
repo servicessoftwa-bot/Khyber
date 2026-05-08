@@ -1,0 +1,21 @@
+﻿{
+  "permissions": {
+    "allow": [
+      "Write(f:/Khyber/**)",
+      "Write(f:\\Khyber\\**)",
+      "Write(f:/QuettaWal/**)",
+      "Write(f:\\QuettaWal\\**)",
+      "Bash(flutter analyze *)",
+      "Bash(flutter pub get)",
+      "Bash(flutter pub get *)",
+      "Bash(flutter build *)",
+      "Bash(flutter clean)",
+      "Bash(flutter clean *)",
+      "Bash(flutter run *)",
+      "Bash(flutter create *)",
+      "Bash(flutter install *)",
+      "Bash(adb install *)",
+      "Bash(mkdir -p *)"
+    ]
+  }
+}

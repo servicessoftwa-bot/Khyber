@@ -1,0 +1,21 @@
+﻿# Node
+khyber_backend/node_modules/
+khyber_backend/.env
+khyber_backend/logs/
+
+# Flutter build artifacts
+khyber_mobile/build/
+khyber_mobile/.dart_tool/
+khyber_mobile/.flutter-plugins
+khyber_mobile/.flutter-plugins-dependencies
+khyber_mobile/.packages
+khyber_mobile/pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
