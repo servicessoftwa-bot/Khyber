@@ -1,10 +1,8 @@
-﻿{
+{
   "permissions": {
     "allow": [
       "Write(f:/Khyber/**)",
       "Write(f:\\Khyber\\**)",
-      "Write(f:/QuettaWal/**)",
-      "Write(f:\\QuettaWal\\**)",
       "Bash(flutter analyze *)",
       "Bash(flutter pub get)",
       "Bash(flutter pub get *)",
