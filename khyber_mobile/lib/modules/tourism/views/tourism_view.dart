@@ -8,6 +8,9 @@ class TourismView extends GetView<TourismController> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
+    final cols = w >= 800 ? 2 : 1;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(slivers: [
@@ -31,7 +34,7 @@ class TourismView extends GetView<TourismController> {
                 decoration: const InputDecoration(hintText: 'Search destinations...', hintStyle: TextStyle(color: Colors.white60), prefixIcon: Icon(Icons.search_rounded, color: Colors.white60, size: 20), border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 10)))),
           )),
         ),
-        SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.fromLTRB(16, 14, 16, 4), child: SizedBox(height: 36, child: Obx(() => ListView.separated(
+        SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 14, hPad, 4), child: SizedBox(height: 36, child: Obx(() => ListView.separated(
           scrollDirection: Axis.horizontal, itemCount: controller.categories.length, separatorBuilder: (_, __) => const SizedBox(width: 8),
           itemBuilder: (_, i) { final cat = controller.categories[i]; final sel = controller.selectedCategory.value == cat;
             return GestureDetector(onTap: () => controller.selectedCategory.value = cat, child: AnimatedContainer(
@@ -43,38 +46,58 @@ class TourismView extends GetView<TourismController> {
               child: Text(cat, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : AppColors.textSecondary)))); },
         ))))),
         Obx(() { final spots = controller.filteredSpots;
-          return SliverPadding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
-            final spot = spots[i];
-            return Container(margin: const EdgeInsets.only(bottom: 16),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: AppColors.accent.withOpacity(0.08), blurRadius: 12, offset: const Offset(0, 4))]),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Stack(children: [
-                  ClipRRect(borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                    child: Image.network(spot.image, height: 180, width: double.infinity, fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(height: 180, color: AppColors.accent.withOpacity(0.1), child: const Icon(Icons.landscape_rounded, size: 60, color: AppColors.accent)))),
-                  Positioned(top: 12, right: 12, child: Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(20)),
-                    child: Row(mainAxisSize: MainAxisSize.min, children: [const Icon(Icons.star_rounded, color: AppColors.gold, size: 14), const SizedBox(width: 4), Text(spot.rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13))]))),
-                  Positioned(top: 12, left: 12, child: Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(20)),
-                    child: Text(spot.category, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600)))),
-                ]),
-                Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(spot.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: AppColors.textPrimary)),
-                  const SizedBox(height: 4),
-                  Row(children: [const Icon(Icons.location_on_rounded, size: 14, color: AppColors.textSecondary), const SizedBox(width: 4), Text('${spot.location}, KPK', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary))]),
-                  const SizedBox(height: 10),
-                  Text(spot.description, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.5), maxLines: 3, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 12),
-                  Wrap(spacing: 8, runSpacing: 6, children: spot.highlights.map((h) => Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(color: AppColors.accent.withOpacity(0.08), borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.accent.withOpacity(0.2))),
-                    child: Text(h, style: const TextStyle(fontSize: 11, color: AppColors.accent, fontWeight: FontWeight.w500)))).toList()),
-                ])),
-              ]));
-          }, childCount: spots.length)));
+          if (cols == 1) {
+            return SliverPadding(
+              padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24),
+              sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) => _SpotCard(spot: spots[i]), childCount: spots.length)),
+            );
+          }
+          return SliverPadding(
+            padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate((context, i) => _SpotCard(spot: spots[i]), childCount: spots.length),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 0.85),
+            ),
+          );
         }),
       ]),
     );
+  }
+}
+
+class _SpotCard extends StatelessWidget {
+  final dynamic spot;
+  const _SpotCard({required this.spot});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: AppColors.accent.withOpacity(0.08), blurRadius: 12, offset: const Offset(0, 4))]),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Stack(children: [
+          ClipRRect(borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            child: Image.network(spot.image, height: 180, width: double.infinity, fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(height: 180, color: AppColors.accent.withOpacity(0.1), child: const Icon(Icons.landscape_rounded, size: 60, color: AppColors.accent)))),
+          Positioned(top: 12, right: 12, child: Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(20)),
+            child: Row(mainAxisSize: MainAxisSize.min, children: [const Icon(Icons.star_rounded, color: AppColors.gold, size: 14), const SizedBox(width: 4), Text(spot.rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13))]))),
+          Positioned(top: 12, left: 12, child: Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(20)),
+            child: Text(spot.category, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600)))),
+        ]),
+        Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(spot.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: AppColors.textPrimary)),
+          const SizedBox(height: 4),
+          Row(children: [const Icon(Icons.location_on_rounded, size: 14, color: AppColors.textSecondary), const SizedBox(width: 4), Text('${spot.location}, KPK', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary))]),
+          const SizedBox(height: 10),
+          Text(spot.description, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.5), maxLines: 3, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: 12),
+          Wrap(spacing: 8, runSpacing: 6, children: spot.highlights.map<Widget>((h) => Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(color: AppColors.accent.withOpacity(0.08), borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.accent.withOpacity(0.2))),
+            child: Text(h, style: const TextStyle(fontSize: 11, color: AppColors.accent, fontWeight: FontWeight.w500)))).toList()),
+        ])),
+      ]));
   }
 }
