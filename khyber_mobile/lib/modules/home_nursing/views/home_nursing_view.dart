@@ -14,6 +14,8 @@ class HomeNursingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Column(
@@ -37,6 +39,8 @@ class HomeNursingView extends StatelessWidget {
 class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8, bottom: 20, left: 20, right: 20),
       decoration: const BoxDecoration(
@@ -85,6 +89,8 @@ class _TabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Container(
       color: AppColors.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -121,8 +127,10 @@ class _ServicesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
       children: [
         // Coverage banner
         Container(
@@ -155,6 +163,8 @@ class _ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     final color = Color(service.color);
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -229,8 +239,10 @@ class _NursesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
       children: [
         const Text('Our Qualified Nurses', style: TextStyle(fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
         const SizedBox(height: 4),
@@ -249,6 +261,8 @@ class _NurseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
@@ -328,8 +342,10 @@ class _BookingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -471,6 +487,8 @@ class _ServiceDropdown extends StatelessWidget {
   HomeNursingController get ctrl => Get.find<HomeNursingController>();
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

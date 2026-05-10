@@ -8,6 +8,8 @@ class CourierView extends GetView<CourierController> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Obx(() => controller.isBooked.value
@@ -23,6 +25,8 @@ class _BookingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return CustomScrollView(slivers: [
       SliverAppBar(
         expandedHeight: 160, pinned: true, backgroundColor: AppColors.primary,
@@ -48,7 +52,7 @@ class _BookingView extends StatelessWidget {
       ),
       SliverToBoxAdapter(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Choose Service',
               style: Theme.of(context).textTheme.titleMedium
@@ -205,6 +209,8 @@ class _BookedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Center(child: Padding(
@@ -235,3 +241,4 @@ class _BookedView extends StatelessWidget {
     );
   }
 }
+

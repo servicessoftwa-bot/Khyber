@@ -24,16 +24,9 @@ class _ConfirmationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          expandedHeight: 160,
-          pinned: true,
-          backgroundColor: AppColors.primary,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-            onPressed: () => Get.back(),
-          ),
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
+    return CustomScrollView(slivers: [SliverAppBar(expandedHeight: 160, pinned: true, backgroundColor: AppColors.primary, leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white), onPressed: () => Get.back(),,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
               decoration: const BoxDecoration(
@@ -60,10 +53,7 @@ class _ConfirmationView extends StatelessWidget {
             ),
           ),
         ),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Padding(
-            padding: const EdgeInsets.all(24),
+        SliverFillRemaining(hasScrollBody: false, child: Center(child: ConstrainedBox(constraints: BoxConstraints(maxWidth: 700), child: Padding(padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -152,16 +142,9 @@ class _BookingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          expandedHeight: 160,
-          pinned: true,
-          backgroundColor: AppColors.primary,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-            onPressed: () => Get.back(),
-          ),
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
+    return CustomScrollView(slivers: [SliverAppBar(expandedHeight: 160, pinned: true, backgroundColor: AppColors.primary, leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white), onPressed: () => Get.back(),,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
               decoration: const BoxDecoration(
@@ -188,9 +171,7 @@ class _BookingView extends StatelessWidget {
             ),
           ),
         ),
-        SliverPadding(
-          padding: const EdgeInsets.all(16),
-          sliver: SliverList(
+        SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), sliver: SliverList(
             delegate: SliverChildListDelegate([
               // Step 1: Choose service
               _SectionHeader('1. Choose Freight Service'),
@@ -479,3 +460,4 @@ class _Field extends StatelessWidget {
     );
   }
 }
+

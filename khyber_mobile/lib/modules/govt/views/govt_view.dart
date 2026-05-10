@@ -19,6 +19,8 @@ class GovtView extends GetView<GovtController> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(slivers: [
@@ -47,7 +49,7 @@ class GovtView extends GetView<GovtController> {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
           sliver: SliverList(delegate: SliverChildListDelegate([
             const Text('Government Services', style: TextStyle(fontFamily: 'Poppins', fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
             const SizedBox(height: 10),
@@ -100,3 +102,4 @@ class GovtView extends GetView<GovtController> {
     );
   }
 }
+

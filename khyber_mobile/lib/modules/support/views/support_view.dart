@@ -8,6 +8,8 @@ class SupportView extends GetView<SupportController> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(
@@ -49,9 +51,7 @@ class SupportView extends GetView<SupportController> {
               ),
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.all(16),
-            sliver: SliverList(
+          SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), sliver: SliverList(
               delegate: SliverChildListDelegate([
                 // Contact options
                 Row(children: [
@@ -208,3 +208,4 @@ class _ContactCard extends StatelessWidget {
     );
   }
 }
+

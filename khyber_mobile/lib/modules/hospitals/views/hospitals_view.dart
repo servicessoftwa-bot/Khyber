@@ -9,6 +9,8 @@ class HospitalsView extends GetView<HospitalsController> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(slivers: [
@@ -44,7 +46,7 @@ class HospitalsView extends GetView<HospitalsController> {
           )),
         ),
         Obx(() { final list = controller.filteredHospitals;
-          return SliverPadding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
+          return SliverPadding(padding: const EdgeInsets.fromLTRB(hPad, 12, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
             final h = list[i];
             return Container(margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
@@ -88,3 +90,4 @@ class HospitalsView extends GetView<HospitalsController> {
     );
   }
 }
+
