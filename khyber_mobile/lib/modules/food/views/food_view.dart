@@ -41,14 +41,15 @@ class FoodView extends StatelessWidget {
   }
 }
 
-// ── HEADER ────────────────────────────────────────────────────────────────────
 class _FoodHeader extends StatelessWidget {
   FoodController get ctrl => Get.find<FoodController>();
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 20 : 20.0;
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8, bottom: 16, left: 20, right: 20),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8, bottom: 16, left: hPad, right: hPad),
       color: AppColors.surface,
       child: Column(children: [
         Row(children: [
@@ -80,7 +81,6 @@ class _FoodHeader extends StatelessWidget {
   }
 }
 
-// ── FILTER BAR ────────────────────────────────────────────────────────────────
 class _FilterBar extends StatelessWidget {
   FoodController get ctrl => Get.find<FoodController>();
 
@@ -117,20 +117,33 @@ class _FilterBar extends StatelessWidget {
   }
 }
 
-// ── RESTAURANT LIST ───────────────────────────────────────────────────────────
 class _RestaurantList extends StatelessWidget {
   FoodController get ctrl => Get.find<FoodController>();
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final cols = w >= 800 ? 2 : 1;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Obx(() {
       final list = ctrl.filteredRestaurants;
       if (list.isEmpty) {
-        return const Center(child: Text('No restaurants found', style: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary)));
+        return const Center(child: Text('No restaurants found',
+          style: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary)));
       }
-      return ListView.builder(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
+      if (cols == 1) {
+        return ListView.builder(
+          padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 100),
+          itemCount: list.length,
+          itemBuilder: (_, i) => _RestaurantCard(restaurant: list[i]),
+        );
+      }
+      return GridView.builder(
+        padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 100),
         itemCount: list.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 0.82,
+        ),
         itemBuilder: (_, i) => _RestaurantCard(restaurant: list[i]),
       );
     });
@@ -225,7 +238,6 @@ class _InfoChip extends StatelessWidget {
   ]);
 }
 
-// ── MENU BOTTOM SHEET ─────────────────────────────────────────────────────────
 class _MenuSheet extends StatelessWidget {
   final RestaurantModel restaurant;
   const _MenuSheet({required this.restaurant});
@@ -330,7 +342,6 @@ class _MenuItemCard extends StatelessWidget {
   }
 }
 
-// ── CART BOTTOM SHEET ─────────────────────────────────────────────────────────
 class _CartSheet extends StatelessWidget {
   FoodController get ctrl => Get.find<FoodController>();
 

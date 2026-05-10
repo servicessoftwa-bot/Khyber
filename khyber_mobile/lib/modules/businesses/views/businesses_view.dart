@@ -8,14 +8,15 @@ class BusinessesView extends GetView<BusinessesController> {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
+    final cols = w >= 800 ? 2 : 1;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 160,
-            pinned: true,
-            backgroundColor: AppColors.primary,
+            expandedHeight: 160, pinned: true, backgroundColor: AppColors.primary,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
               onPressed: () => Get.back(),
@@ -25,8 +26,7 @@ class BusinessesView extends GetView<BusinessesController> {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [AppColors.primary, AppColors.primaryDark],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                    begin: Alignment.topLeft, end: Alignment.bottomRight,
                   ),
                 ),
                 child: SafeArea(
@@ -56,9 +56,7 @@ class BusinessesView extends GetView<BusinessesController> {
                 child: Column(children: [
                   Container(
                     height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.15), borderRadius: BorderRadius.circular(12)),
                     child: TextField(
                       onChanged: (v) => controller.searchQuery.value = v,
                       style: const TextStyle(color: Colors.white, fontSize: 14, fontFamily: 'Poppins'),
@@ -108,12 +106,24 @@ class BusinessesView extends GetView<BusinessesController> {
                   style: TextStyle(fontFamily: 'Poppins', fontSize: 14, color: AppColors.textSecondary))),
               );
             }
+            if (cols == 1) {
+              return SliverPadding(
+                padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+                sliver: SliverList(delegate: SliverChildBuilderDelegate(
+                  (context, i) => _BusinessCard(biz: list[i]),
+                  childCount: list.length,
+                )),
+              );
+            }
             return SliverPadding(
-              padding: const EdgeInsets.all(16),
-              sliver: SliverList(
+              padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+              sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (context, i) => _BusinessCard(biz: list[i]),
                   childCount: list.length,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, crossAxisSpacing: 14, mainAxisSpacing: 14, childAspectRatio: 1.6,
                 ),
               ),
             );
@@ -147,8 +157,7 @@ class _BusinessCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
+        color: AppColors.surface, borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border),
         boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.05), blurRadius: 8, offset: const Offset(0, 3))],
       ),
@@ -156,11 +165,8 @@ class _BusinessCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-            Container(
-              width: 48, height: 48,
-              decoration: BoxDecoration(
-                color: _catColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12)),
+            Container(width: 48, height: 48,
+              decoration: BoxDecoration(color: _catColor.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
               child: Icon(Icons.business_rounded, size: 26, color: _catColor),
             ),
             const SizedBox(width: 12),
@@ -168,12 +174,11 @@ class _BusinessCard extends StatelessWidget {
               Row(children: [
                 Expanded(child: Text(biz.name,
                   style: const TextStyle(fontFamily: 'Poppins', fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textPrimary))),
-                if (biz.isVerified)
-                  const Icon(Icons.verified_rounded, size: 16, color: Color(0xFF2980B9)),
+                if (biz.isVerified) const Icon(Icons.verified_rounded, size: 16, color: Color(0xFF2980B9)),
               ]),
               const SizedBox(height: 2),
               Row(children: [
-                Icon(Icons.location_on_rounded, size: 12, color: AppColors.textHint),
+                const Icon(Icons.location_on_rounded, size: 12, color: AppColors.textHint),
                 const SizedBox(width: 3),
                 Expanded(child: Text(biz.area,
                   style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, color: AppColors.textSecondary))),

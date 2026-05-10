@@ -10,15 +10,11 @@ class HotelsView extends StatelessWidget {
 
   HotelsController get ctrl => Get.find<HotelsController>();
 
-  static const _typeColors = {
-    'hotel':      Color(0xFF1A6B72),
-    'resort':     Color(0xFF16A085),
-    'villa':      Color(0xFFD4A017),
-    'guesthouse': Color(0xFFB03A2E),
-  };
-
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final cols = w >= 800 ? 2 : 1;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: NestedScrollView(
@@ -33,10 +29,8 @@ class HotelsView extends StatelessWidget {
               onPressed: () => Get.back(),
             ),
             flexibleSpace: FlexibleSpaceBar(
-              title: const Text(
-                'Stay in KPK',
-                style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w700, fontSize: 18, color: AppColors.textPrimary),
-              ),
+              title: const Text('Stay in KPK',
+                style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w700, fontSize: 18, color: AppColors.textPrimary)),
               titlePadding: const EdgeInsets.only(left: 56, bottom: 52),
               background: Container(
                 decoration: const BoxDecoration(
@@ -46,9 +40,7 @@ class HotelsView extends StatelessWidget {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: const Center(
-                  child: Icon(Icons.hotel_rounded, size: 48, color: Colors.white24),
-                ),
+                child: const Center(child: Icon(Icons.hotel_rounded, size: 48, color: Colors.white24)),
               ),
             ),
             bottom: PreferredSize(
@@ -65,8 +57,7 @@ class HotelsView extends StatelessWidget {
                     suffixIcon: ctrl.searchQuery.value.isNotEmpty
                         ? IconButton(icon: const Icon(Icons.clear_rounded, size: 18), onPressed: () => ctrl.setSearch(''))
                         : null,
-                    filled: true,
-                    fillColor: AppColors.background,
+                    filled: true, fillColor: AppColors.background,
                     contentPadding: const EdgeInsets.symmetric(vertical: 0),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
                   ),
@@ -78,7 +69,7 @@ class HotelsView extends StatelessWidget {
         body: Column(
           children: [
             _FilterBar(),
-            Expanded(child: _PropertyList()),
+            Expanded(child: _PropertyList(cols: cols, hPad: hPad)),
           ],
         ),
       ),
@@ -111,15 +102,9 @@ class _FilterBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: selected ? AppColors.primary : AppColors.border),
                 ),
-                child: Text(
-                  f,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: selected ? Colors.white : AppColors.textSecondary,
-                  ),
-                ),
+                child: Text(f, style: TextStyle(
+                  fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w600,
+                  color: selected ? Colors.white : AppColors.textSecondary)),
               ),
             );
           }).toList(),
@@ -130,6 +115,9 @@ class _FilterBar extends StatelessWidget {
 }
 
 class _PropertyList extends StatelessWidget {
+  final int cols;
+  final double hPad;
+  const _PropertyList({required this.cols, required this.hPad});
   HotelsController get ctrl => Get.find<HotelsController>();
 
   static const _typeColors = {
@@ -152,9 +140,19 @@ class _PropertyList extends StatelessWidget {
           ]),
         );
       }
-      return ListView.builder(
-        padding: const EdgeInsets.all(16),
+      if (cols == 1) {
+        return ListView.builder(
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+          itemCount: list.length,
+          itemBuilder: (_, i) => _PropertyCard(property: list[i], typeColors: _typeColors),
+        );
+      }
+      return GridView.builder(
+        padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
         itemCount: list.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 0.78,
+        ),
         itemBuilder: (_, i) => _PropertyCard(property: list[i], typeColors: _typeColors),
       );
     });
@@ -164,9 +162,7 @@ class _PropertyList extends StatelessWidget {
 class _PropertyCard extends StatelessWidget {
   final HotelModel property;
   final Map<String, Color> typeColors;
-
   const _PropertyCard({required this.property, required this.typeColors});
-
   HotelsController get ctrl => Get.find<HotelsController>();
 
   @override
@@ -175,39 +171,32 @@ class _PropertyCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(18),
+        color: AppColors.surface, borderRadius: BorderRadius.circular(18),
         boxShadow: [BoxShadow(color: color.withValues(alpha: 0.08), blurRadius: 16, offset: const Offset(0, 4))],
         border: Border.all(color: AppColors.border, width: 0.8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
             child: Stack(
               children: [
                 CachedNetworkImage(
                   imageUrl: property.image,
-                  height: 190,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  placeholder: (_, __) => Container(height: 190, color: AppColors.border),
-                  errorWidget: (_, __, ___) => Container(height: 190, color: AppColors.primaryLight,
+                  height: 180, width: double.infinity, fit: BoxFit.cover,
+                  placeholder: (_, __) => Container(height: 180, color: AppColors.border),
+                  errorWidget: (_, __, ___) => Container(height: 180, color: AppColors.primaryLight,
                     child: const Icon(Icons.hotel_rounded, size: 48, color: AppColors.primary)),
                 ),
-                Positioned(
-                  top: 12, left: 12,
+                Positioned(top: 12, left: 12,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(20)),
                     child: Text(ctrl.typeLabel(property.type),
                       style: const TextStyle(fontFamily: 'Poppins', color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600)),
-                  ),
-                ),
-                Positioned(
-                  top: 12, right: 12,
+                  )),
+                Positioned(top: 12, right: 12,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
@@ -217,12 +206,10 @@ class _PropertyCard extends StatelessWidget {
                       Text('${property.rating}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
                       Text(' (${property.reviews})', style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, color: AppColors.textSecondary)),
                     ]),
-                  ),
-                ),
+                  )),
               ],
             ),
           ),
-          // Details
           Padding(
             padding: const EdgeInsets.all(14),
             child: Column(
@@ -236,7 +223,6 @@ class _PropertyCard extends StatelessWidget {
                   Expanded(child: Text(property.location, style: const TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textSecondary), overflow: TextOverflow.ellipsis)),
                 ]),
                 const SizedBox(height: 10),
-                // Amenities
                 Wrap(
                   spacing: 6, runSpacing: 6,
                   children: property.amenities.take(4).map((a) => Container(
@@ -257,8 +243,7 @@ class _PropertyCard extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: color,
-                        foregroundColor: Colors.white,
+                        backgroundColor: color, foregroundColor: Colors.white,
                         minimumSize: const Size(110, 40),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         elevation: 0,

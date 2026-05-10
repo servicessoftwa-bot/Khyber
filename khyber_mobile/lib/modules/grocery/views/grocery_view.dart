@@ -23,6 +23,8 @@ class _StoreListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -60,7 +62,7 @@ class _StoreListView extends StatelessWidget {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, i) {
@@ -141,6 +143,9 @@ class _ProductsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final cols = w < 600 ? 2 : w < 900 ? 3 : 4;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(
@@ -213,7 +218,7 @@ class _ProductsView extends StatelessWidget {
               );
             }
             return SliverPadding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
               sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (context, i) {
@@ -292,8 +297,11 @@ class _ProductsView extends StatelessWidget {
                   },
                   childCount: items.length,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 0.72,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: cols,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: cols > 2 ? 0.78 : 0.72,
                 ),
               ),
             );

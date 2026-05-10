@@ -7,6 +7,9 @@ class EducationView extends GetView<EducationController> {
   const EducationView({super.key});
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
+    final cols = w >= 800 ? 2 : 1;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(slivers: [
@@ -25,40 +28,58 @@ class EducationView extends GetView<EducationController> {
               child: TextField(onChanged: (v) => controller.searchQuery.value = v, style: const TextStyle(color: Colors.white, fontSize: 14),
                 decoration: const InputDecoration(hintText: 'Search institutes...', hintStyle: TextStyle(color: Colors.white60), prefixIcon: Icon(Icons.search_rounded, color: Colors.white60, size: 20), border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 10)))))),
         ),
-        SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 4), child: Obx(() => Wrap(spacing: 8, runSpacing: 8, children: controller.types.map((t) { final sel = controller.selectedType.value == t;
+        SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 4), child: Obx(() => Wrap(spacing: 8, runSpacing: 8, children: controller.types.map((t) { final sel = controller.selectedType.value == t;
           return GestureDetector(onTap: () => controller.selectedType.value = t, child: AnimatedContainer(duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
             decoration: BoxDecoration(color: sel ? AppColors.primary : Colors.white, borderRadius: BorderRadius.circular(20), border: Border.all(color: sel ? AppColors.primary : AppColors.border),
               boxShadow: sel ? [BoxShadow(color: AppColors.primary.withOpacity(0.2), blurRadius: 6)] : []),
             child: Text(t, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : AppColors.textSecondary)))); }).toList())))),
         Obx(() { final list = controller.filteredInstitutes;
-          return SliverPadding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
-            final e = list[i];
-            return Container(margin: const EdgeInsets.only(bottom: 14),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.07), blurRadius: 10, offset: const Offset(0, 4))]),
-              child: Padding(padding: const EdgeInsets.all(14), child: Row(children: [
-                ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.network(e.image, width: 80, height: 80, fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(width: 80, height: 80, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(12)),
-                    child: const Icon(Icons.school_rounded, color: AppColors.primary, size: 36)))),
-                const SizedBox(width: 12),
-                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [Expanded(child: Text(e.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary), maxLines: 2, overflow: TextOverflow.ellipsis)),
-                    const SizedBox(width: 6), Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(20)), child: Text(e.type, style: const TextStyle(fontSize: 10, color: AppColors.primary, fontWeight: FontWeight.w600)))]),
-                  const SizedBox(height: 3),
-                  Text(e.level, style: const TextStyle(fontSize: 12, color: AppColors.accent, fontWeight: FontWeight.w500)),
-                  const SizedBox(height: 3),
-                  Row(children: [const Icon(Icons.location_on_rounded, size: 12, color: AppColors.textSecondary), const SizedBox(width: 3), Expanded(child: Text(e.address, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary), maxLines: 1, overflow: TextOverflow.ellipsis))]),
-                  const SizedBox(height: 3),
-                  Row(children: [const Icon(Icons.star_rounded, color: AppColors.gold, size: 13), const SizedBox(width: 3), Text(e.rating.toString(), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: AppColors.textPrimary))]),
-                  const SizedBox(height: 6),
-                  Wrap(spacing: 4, runSpacing: 4, children: e.programs.take(3).map((p) => Container(padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2), decoration: BoxDecoration(color: AppColors.background, borderRadius: BorderRadius.circular(6), border: Border.all(color: AppColors.border)),
-                    child: Text(p, style: const TextStyle(fontSize: 10, color: AppColors.textSecondary)))).toList()),
-                ])),
-              ])));
-          }, childCount: list.length)));
+          if (cols == 1) {
+            return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) => _EduCard(e: list[i]), childCount: list.length)));
+          }
+          return SliverPadding(
+            padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate((context, i) => _EduCard(e: list[i]), childCount: list.length),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 14, mainAxisSpacing: 14, childAspectRatio: 2.0),
+            ),
+          );
         }),
       ]),
+    );
+  }
+}
+
+class _EduCard extends StatelessWidget {
+  final dynamic e;
+  const _EduCard({required this.e});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 14),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.07), blurRadius: 10, offset: const Offset(0, 4))]),
+      child: Padding(padding: const EdgeInsets.all(14), child: Row(children: [
+        ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.network(e.image, width: 80, height: 80, fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => Container(width: 80, height: 80, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.school_rounded, color: AppColors.primary, size: 36)))),
+        const SizedBox(width: 12),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(children: [Expanded(child: Text(e.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary), maxLines: 2, overflow: TextOverflow.ellipsis)),
+            const SizedBox(width: 6), Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(20)), child: Text(e.type, style: const TextStyle(fontSize: 10, color: AppColors.primary, fontWeight: FontWeight.w600)))]),
+          const SizedBox(height: 3),
+          Text(e.level, style: const TextStyle(fontSize: 12, color: AppColors.accent, fontWeight: FontWeight.w500)),
+          const SizedBox(height: 3),
+          Row(children: [const Icon(Icons.location_on_rounded, size: 12, color: AppColors.textSecondary), const SizedBox(width: 3), Expanded(child: Text(e.address, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary), maxLines: 1, overflow: TextOverflow.ellipsis))]),
+          const SizedBox(height: 3),
+          Row(children: [const Icon(Icons.star_rounded, color: AppColors.gold, size: 13), const SizedBox(width: 3), Text(e.rating.toString(), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: AppColors.textPrimary))]),
+          const SizedBox(height: 6),
+          Wrap(spacing: 4, runSpacing: 4, children: e.programs.take(3).map<Widget>((p) => Container(padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2), decoration: BoxDecoration(color: AppColors.background, borderRadius: BorderRadius.circular(6), border: Border.all(color: AppColors.border)),
+            child: Text(p, style: const TextStyle(fontSize: 10, color: AppColors.textSecondary)))).toList()),
+        ])),
+      ])),
     );
   }
 }

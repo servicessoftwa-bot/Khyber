@@ -21,6 +21,8 @@ class _PharmacyListView extends StatelessWidget {
   const _PharmacyListView({required this.ctrl});
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return CustomScrollView(slivers: [
       SliverAppBar(
         expandedHeight: 160, pinned: true, backgroundColor: AppColors.primary,
@@ -37,7 +39,7 @@ class _PharmacyListView extends StatelessWidget {
         ),
       ),
       SliverPadding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
         sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
           final ph = ctrl.pharmacies[i];
           return Padding(padding: const EdgeInsets.only(bottom: 14), child: GestureDetector(
@@ -84,6 +86,9 @@ class _MedicineView extends StatelessWidget {
   const _MedicineView({required this.ctrl});
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final cols = w >= 800 ? 2 : 1;
+    final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: CustomScrollView(slivers: [
@@ -113,42 +118,16 @@ class _MedicineView extends StatelessWidget {
         ),
         Obx(() { final items = ctrl.filteredMedicines;
           if (items.isEmpty) return const SliverFillRemaining(child: Center(child: Text('No medicines found', style: TextStyle(color: AppColors.textSecondary))));
-          return SliverPadding(padding: const EdgeInsets.all(16), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
-            final m = items[i];
-            return Container(margin: const EdgeInsets.only(bottom: 12), padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8)]),
-              child: Row(children: [
-                ClipRRect(borderRadius: BorderRadius.circular(10),
-                  child: Image.network(m.image, width: 64, height: 64, fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(width: 64, height: 64, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(10)),
-                      child: const Icon(Icons.medication_rounded, color: AppColors.primary, size: 32)))),
-                const SizedBox(width: 12),
-                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [
-                    Expanded(child: Text(m.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary))),
-                    if (m.requiresPrescription) Container(padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                      decoration: BoxDecoration(color: Colors.orange.withOpacity(0.12), borderRadius: BorderRadius.circular(8)),
-                      child: const Text('Rx', style: TextStyle(fontSize: 10, color: Colors.orange, fontWeight: FontWeight.bold))),
-                  ]),
-                  Text(m.brand, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-                  const SizedBox(height: 6),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text('PKR ${m.price.toInt()}', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 15)),
-                    Obx(() { final qty = ctrl.itemQty(m.id);
-                      return qty == 0
-                          ? GestureDetector(onTap: () => ctrl.addToCart(m.id), child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
-                              child: const Text('Add', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12))))
-                          : Row(mainAxisSize: MainAxisSize.min, children: [
-                              GestureDetector(onTap: () => ctrl.removeFromCart(m.id), child: Container(width: 28, height: 28, decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.12), shape: BoxShape.circle), child: const Icon(Icons.remove_rounded, color: AppColors.primary, size: 16))),
-                              Padding(padding: const EdgeInsets.symmetric(horizontal: 8), child: Text('$qty', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary))),
-                              GestureDetector(onTap: () => ctrl.addToCart(m.id), child: Container(width: 28, height: 28, decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle), child: const Icon(Icons.add_rounded, color: Colors.white, size: 16))),
-                            ]); }),
-                  ]),
-                ])),
-              ]));
-          }, childCount: items.length)));
+          if (cols == 1) {
+            return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) => _MedCard(m: items[i], ctrl: ctrl), childCount: items.length)));
+          }
+          return SliverPadding(
+            padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate((context, i) => _MedCard(m: items[i], ctrl: ctrl), childCount: items.length),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 14, mainAxisSpacing: 14, childAspectRatio: 2.2),
+            ),
+          );
         }),
       ]),
       floatingActionButton: Obx(() { if (ctrl.cartCount == 0) return const SizedBox.shrink();
@@ -156,6 +135,51 @@ class _MedicineView extends StatelessWidget {
           icon: const Icon(Icons.shopping_cart_rounded, color: Colors.white),
           label: Text('${ctrl.cartCount} items  |  PKR ${ctrl.cartTotal.toStringAsFixed(0)}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)));
       }),
+    );
+  }
+}
+
+class _MedCard extends StatelessWidget {
+  final dynamic m;
+  final PharmacyController ctrl;
+  const _MedCard({required this.m, required this.ctrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12), padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8)]),
+      child: Row(children: [
+        ClipRRect(borderRadius: BorderRadius.circular(10),
+          child: Image.network(m.image, width: 64, height: 64, fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Container(width: 64, height: 64, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(10)),
+              child: const Icon(Icons.medication_rounded, color: AppColors.primary, size: 32)))),
+        const SizedBox(width: 12),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(children: [
+            Expanded(child: Text(m.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary))),
+            if (m.requiresPrescription) Container(padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+              decoration: BoxDecoration(color: Colors.orange.withOpacity(0.12), borderRadius: BorderRadius.circular(8)),
+              child: const Text('Rx', style: TextStyle(fontSize: 10, color: Colors.orange, fontWeight: FontWeight.bold))),
+          ]),
+          Text(m.brand, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          const SizedBox(height: 6),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('PKR ${m.price.toInt()}', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 15)),
+            Obx(() { final qty = ctrl.itemQty(m.id);
+              return qty == 0
+                  ? GestureDetector(onTap: () => ctrl.addToCart(m.id), child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
+                      child: const Text('Add', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12))))
+                  : Row(mainAxisSize: MainAxisSize.min, children: [
+                      GestureDetector(onTap: () => ctrl.removeFromCart(m.id), child: Container(width: 28, height: 28, decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.12), shape: BoxShape.circle), child: const Icon(Icons.remove_rounded, color: AppColors.primary, size: 16))),
+                      Padding(padding: const EdgeInsets.symmetric(horizontal: 8), child: Text('$qty', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary))),
+                      GestureDetector(onTap: () => ctrl.addToCart(m.id), child: Container(width: 28, height: 28, decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle), child: const Icon(Icons.add_rounded, color: Colors.white, size: 16))),
+                    ]); }),
+          ]),
+        ])),
+      ]),
     );
   }
 }
