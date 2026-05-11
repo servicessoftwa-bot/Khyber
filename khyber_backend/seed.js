@@ -25,7 +25,7 @@ const Business         = require('./src/models/Business');
 const Event            = require('./src/models/Event');
 
 async function seed() {
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGODB_URI);
   console.log('Connected to MongoDB');
   await Promise.all([
     Restaurant.deleteMany({}), GroceryProduct.deleteMany({}),
