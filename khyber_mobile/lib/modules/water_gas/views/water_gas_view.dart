@@ -47,7 +47,7 @@ class WaterGasView extends GetView<WaterGasController> {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
           sliver: SliverList(delegate: SliverChildListDelegate([
             Container(
               padding: const EdgeInsets.all(14),

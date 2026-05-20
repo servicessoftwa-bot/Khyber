@@ -58,7 +58,7 @@ class ParksView extends GetView<ParksController> {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
           sliver: SliverList(delegate: SliverChildListDelegate([
             const Text('Parks & Recreational Spots', style: TextStyle(fontFamily: 'Poppins', fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
             const SizedBox(height: 12),

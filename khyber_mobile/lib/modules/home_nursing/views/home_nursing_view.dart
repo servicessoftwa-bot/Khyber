@@ -130,7 +130,7 @@ class _ServicesTab extends StatelessWidget {
     final w = MediaQuery.of(context).size.width;
     final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+      padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
       children: [
         // Coverage banner
         Container(
@@ -242,7 +242,7 @@ class _NursesTab extends StatelessWidget {
     final w = MediaQuery.of(context).size.width;
     final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+      padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
       children: [
         const Text('Our Qualified Nurses', style: TextStyle(fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
         const SizedBox(height: 4),
@@ -345,7 +345,7 @@ class _BookingTab extends StatelessWidget {
     final w = MediaQuery.of(context).size.width;
     final hPad = w > 1100 ? (w - 1100) / 2 + 16 : 16.0;
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+      padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

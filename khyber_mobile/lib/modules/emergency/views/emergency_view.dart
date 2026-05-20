@@ -50,20 +50,20 @@ class EmergencyView extends StatelessWidget {
             ),
           ),
         ),
-        SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24), child: Container(
-          padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24), decoration: BoxDecoration(color: const Color(0xFFFFEBEE), borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFEF9A9A))),
+        SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), child: Container(
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), decoration: BoxDecoration(color: const Color(0xFFFFEBEE), borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFEF9A9A))),
           child: Row(children: [const Icon(Icons.info_outline_rounded, color: Color(0xFFB71C1C)), const SizedBox(width: 12),
             const Expanded(child: Text('In case of life-threatening emergency, call immediately. Stay calm and provide your location.', style: TextStyle(fontSize: 13, color: Color(0xFFB71C1C), height: 1.4)))]),
         ))),
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(hPad, 0, hPad, 24),
+          padding: EdgeInsets.fromLTRB(hPad, 0, hPad, 24),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, i) {
               final c = contacts[i];
               return GestureDetector(onTap: () => _call(c.number), child: Container(
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
                   boxShadow: [BoxShadow(color: c.color.withOpacity(0.12), blurRadius: 12, offset: const Offset(0, 4))]),
-                child: Padding(padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                child: Padding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(width: 52, height: 52, decoration: BoxDecoration(color: c.color.withOpacity(0.1), shape: BoxShape.circle),
                     child: Icon(c.icon, color: c.color, size: 28)),
                   const SizedBox(height: 10),

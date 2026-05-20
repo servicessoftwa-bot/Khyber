@@ -46,7 +46,7 @@ class HospitalsView extends GetView<HospitalsController> {
           )),
         ),
         Obx(() { final list = controller.filteredHospitals;
-          return SliverPadding(padding: const EdgeInsets.fromLTRB(hPad, 12, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
+          return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
             final h = list[i];
             return Container(margin: const EdgeInsets.only(bottom: 14),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),

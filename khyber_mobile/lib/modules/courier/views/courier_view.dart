@@ -52,7 +52,7 @@ class _BookingView extends StatelessWidget {
       ),
       SliverToBoxAdapter(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+          padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Choose Service',
               style: Theme.of(context).textTheme.titleMedium

@@ -34,7 +34,7 @@ class EventsView extends GetView<EventsController> {
           )),
         ),
         Obx(() { final list = controller.filteredEvents;
-          return SliverPadding(padding: const EdgeInsets.fromLTRB(hPad, 12, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
+          return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
             final ev = list[i];
             return Container(margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
