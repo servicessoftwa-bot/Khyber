@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
@@ -34,14 +34,14 @@ class HospitalsView extends GetView<HospitalsController> {
                 child: TextField(onChanged: (v) => controller.searchQuery.value = v, style: const TextStyle(color: Colors.white, fontSize: 14),
                   decoration: const InputDecoration(hintText: 'Search hospitals...', hintStyle: TextStyle(color: Colors.white60), prefixIcon: Icon(Icons.search_rounded, color: Colors.white60, size: 20), border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 10)))),
               const SizedBox(height: 8),
-              SizedBox(height: 28, child: Obx(() => ListView.separated(
+              SizedBox(height: 28, child: Obx(() { final sel = controller.selectedDistrict.value; return ListView.separated(
                 scrollDirection: Axis.horizontal, itemCount: controller.districts.length, separatorBuilder: (_, __) => const SizedBox(width: 8),
-                itemBuilder: (_, i) { final d = controller.districts[i]; final sel = controller.selectedDistrict.value == d;
+                itemBuilder: (_, i) { final d = controller.districts[i]; final isSelected = sel == d;
                   return GestureDetector(onTap: () => controller.selectedDistrict.value = d, child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                    decoration: BoxDecoration(color: sel ? Colors.white : Colors.white.withOpacity(0.15), borderRadius: BorderRadius.circular(20)),
-                    child: Text(d, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: sel ? AppColors.primary : Colors.white)))); },
-              ))),
+                    decoration: BoxDecoration(color: isSelected ? Colors.white : Colors.white.withOpacity(0.15), borderRadius: BorderRadius.circular(20)),
+                    child: Text(d, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: isSelected ? AppColors.primary : Colors.white)))); },
+              );})),
             ]),
           )),
         ),

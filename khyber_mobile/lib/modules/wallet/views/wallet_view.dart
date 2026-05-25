@@ -16,10 +16,7 @@ class WalletView extends GetView<WalletController> {
             expandedHeight: 240,
             pinned: true,
             backgroundColor: const Color(0xFF27AE60),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-              onPressed: () => Get.back(),
-            ),
+            automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/businesses_controller.dart';
@@ -72,27 +72,27 @@ class BusinessesView extends GetView<BusinessesController> {
                   const SizedBox(height: 8),
                   SizedBox(
                     height: 32,
-                    child: Obx(() => ListView.separated(
+                    child: Obx(() { final sel = controller.selectedCategory.value; return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: controller.categories.length,
                       separatorBuilder: (_, __) => const SizedBox(width: 8),
                       itemBuilder: (_, i) {
                         final cat = controller.categories[i];
-                        final sel = controller.selectedCategory.value == cat;
+                        final isSelected = sel == cat;
                         return GestureDetector(
                           onTap: () => controller.selectedCategory.value = cat,
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                             decoration: BoxDecoration(
-                              color: sel ? Colors.white : Colors.white.withOpacity(0.15),
+                              color: isSelected ? Colors.white : Colors.white.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(20)),
                             child: Text(cat, style: TextStyle(
                               fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w600,
-                              color: sel ? AppColors.primary : Colors.white)),
+                              color: isSelected ? AppColors.primary : Colors.white)),
                           ),
                         );
                       },
-                    )),
+                    );}),
                   ),
                 ]),
               ),

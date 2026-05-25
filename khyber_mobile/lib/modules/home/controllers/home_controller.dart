@@ -12,7 +12,7 @@ class HomeController extends GetxController {
     {'image': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop', 'title': 'Explore KPK', 'subtitle': 'Mountains, culture & heritage', 'route': '/tourism'},
     {'image': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=300&fit=crop', 'title': 'Best Food in Peshawar', 'subtitle': 'Order from top restaurants', 'route': '/food'},
     {'image': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop', 'title': 'Peshawari Crafts', 'subtitle': 'Authentic handmade goods', 'route': '/crafts'},
-    {'image': 'https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=600&h=300&fit=crop', 'title': 'Book a Ride', 'subtitle': 'Fast & affordable transport', 'route': '/transport'},
+    {'image': 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&h=300&fit=crop', 'title': 'Book a Ride', 'subtitle': 'Fast & affordable transport', 'route': '/transport'},
   ].obs;
 
   @override

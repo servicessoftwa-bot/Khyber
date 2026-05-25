@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://localhost:4000/api/v1';
+  static const String baseUrl = 'http://192.168.100.115:4000/api/v1';
 
   // Auth
   static const String login         = '/auth/login';

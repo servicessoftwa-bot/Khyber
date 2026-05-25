@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/jobs_controller.dart';
@@ -38,29 +38,29 @@ class JobsView extends GetView<JobsController> {
         SliverToBoxAdapter(child: Padding(
           padding: EdgeInsets.fromLTRB(hPad, 12, hPad, 0),
           child: Column(children: [
-            SizedBox(height: 36, child: Obx(() => ListView.separated(
+            SizedBox(height: 36, child: Obx(() { final sel = controller.selectedCategory.value; return ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: controller.categories.length, separatorBuilder: (_, __) => const SizedBox(width: 8),
-              itemBuilder: (_, i) { final cat = controller.categories[i]; final sel = controller.selectedCategory.value == cat;
+              itemBuilder: (_, i) { final cat = controller.categories[i]; final isSelected = sel == cat;
                 return GestureDetector(onTap: () => controller.selectedCategory.value = cat, child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(color: sel ? AppColors.primary : Colors.white, borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: sel ? AppColors.primary : AppColors.border),
-                    boxShadow: sel ? [BoxShadow(color: AppColors.primary.withOpacity(0.25), blurRadius: 8)] : []),
-                  child: Text(cat, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : AppColors.textSecondary)))); },
-            ))),
+                  decoration: BoxDecoration(color: isSelected ? AppColors.primary : Colors.white, borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: isSelected ? AppColors.primary : AppColors.border),
+                    boxShadow: isSelected ? [BoxShadow(color: AppColors.primary.withOpacity(0.25), blurRadius: 8)] : []),
+                  child: Text(cat, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isSelected ? Colors.white : AppColors.textSecondary)))); },
+            );})),
             const SizedBox(height: 8),
-            SizedBox(height: 32, child: Obx(() => ListView.separated(
+            SizedBox(height: 32, child: Obx(() { final selType = controller.selectedType.value; return ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: controller.types.length, separatorBuilder: (_, __) => const SizedBox(width: 8),
-              itemBuilder: (_, i) { final type = controller.types[i]; final sel = controller.selectedType.value == type;
+              itemBuilder: (_, i) { final type = controller.types[i]; final isSelected = selType == type;
                 return GestureDetector(onTap: () => controller.selectedType.value = type, child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(color: sel ? AppColors.accent.withOpacity(0.12) : Colors.transparent, borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: sel ? AppColors.accent : AppColors.border)),
-                  child: Text(type, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: sel ? AppColors.accent : AppColors.textSecondary)))); },
-            ))),
+                  decoration: BoxDecoration(color: isSelected ? AppColors.accent.withOpacity(0.12) : Colors.transparent, borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: isSelected ? AppColors.accent : AppColors.border)),
+                  child: Text(type, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: isSelected ? AppColors.accent : AppColors.textSecondary)))); },
+            );})),
             const SizedBox(height: 12),
           ]),
         )),

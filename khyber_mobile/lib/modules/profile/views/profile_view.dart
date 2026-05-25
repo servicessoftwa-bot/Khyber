@@ -19,10 +19,7 @@ class ProfileView extends GetView<ProfileController> {
             expandedHeight: 220,
             pinned: true,
             backgroundColor: AppColors.primary,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-              onPressed: () => Get.back(),
-            ),
+            automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(

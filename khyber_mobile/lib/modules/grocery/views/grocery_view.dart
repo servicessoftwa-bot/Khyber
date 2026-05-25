@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/grocery_controller.dart';
@@ -183,13 +183,13 @@ class _ProductsView extends StatelessWidget {
                     const SizedBox(height: 8),
                     SizedBox(
                       height: 32,
-                      child: Obx(() => ListView.separated(
+                      child: Obx(() { final sel = controller.selectedCategory.value; return ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: controller.categories.length,
                         separatorBuilder: (_, __) => const SizedBox(width: 8),
                         itemBuilder: (_, i) {
                           final cat = controller.categories[i];
-                          final selected = controller.selectedCategory.value == cat;
+                          final selected = sel == cat;
                           return GestureDetector(
                             onTap: () => controller.selectedCategory.value = cat,
                             child: Container(
@@ -203,7 +203,7 @@ class _ProductsView extends StatelessWidget {
                             ),
                           );
                         },
-                      )),
+                      );}),
                     ),
                   ],
                 ),

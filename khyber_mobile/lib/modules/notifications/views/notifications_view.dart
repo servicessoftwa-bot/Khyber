@@ -88,6 +88,7 @@ class NotificationsView extends GetView<NotificationsController> {
                     final cfg = _typeConfig[n.type] ?? {'color': 0xFF999999, 'icon': Icons.circle};
                     final color = Color(cfg['color'] as int);
                     final icon  = cfg['icon'] as IconData;
+                    final isUnread = !n.isRead;
                     return Dismissible(
                       key: Key(n.id),
                       direction: DismissDirection.endToStart,
@@ -104,55 +105,52 @@ class NotificationsView extends GetView<NotificationsController> {
                       onDismissed: (_) => controller.delete(n.id),
                       child: GestureDetector(
                         onTap: () => controller.markRead(n.id),
-                        child: Obx(() {
-                          final isUnread = !n.isRead;
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: isUnread ? color.withOpacity(0.04) : AppColors.surface,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: isUnread ? color.withOpacity(0.2) : AppColors.border,
-                                width: isUnread ? 1.5 : 1,
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: isUnread ? color.withOpacity(0.04) : AppColors.surface,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: isUnread ? color.withOpacity(0.2) : AppColors.border,
+                              width: isUnread ? 1.5 : 1,
+                            ),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 42, height: 42,
+                                decoration: BoxDecoration(color: color.withOpacity(0.12), shape: BoxShape.circle),
+                                child: Icon(icon, size: 20, color: color),
                               ),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 42, height: 42,
-                                  decoration: BoxDecoration(color: color.withOpacity(0.12), shape: BoxShape.circle),
-                                  child: Icon(icon, size: 20, color: color),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(children: [
+                                      Expanded(child: Text(n.title, style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 13,
+                                        fontWeight: isUnread ? FontWeight.w700 : FontWeight.w600,
+                                        color: AppColors.textPrimary,
+                                      ))),
+                                      if (isUnread)
+                                        Container(
+                                          width: 8, height: 8,
+                                          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                                        ),
+                                    ]),
+                                    const SizedBox(height: 4),
+                                    Text(n.body, style: const TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textSecondary, height: 1.4)),
+                                    const SizedBox(height: 6),
+                                    Text(_timeLabel(n.time), style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, color: AppColors.textHint)),
+                                  ],
                                 ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(children: [
-                                        Expanded(child: Text(n.title, style: TextStyle(
-                                          fontFamily: 'Poppins', fontSize: 13,
-                                          fontWeight: isUnread ? FontWeight.w700 : FontWeight.w600,
-                                          color: AppColors.textPrimary,
-                                        ))),
-                                        if (isUnread)
-                                          Container(
-                                            width: 8, height: 8,
-                                            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-                                          ),
-                                      ]),
-                                      const SizedBox(height: 4),
-                                      Text(n.body, style: const TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textSecondary, height: 1.4)),
-                                      const SizedBox(height: 6),
-                                      Text(_timeLabel(n.time), style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, color: AppColors.textHint)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   },

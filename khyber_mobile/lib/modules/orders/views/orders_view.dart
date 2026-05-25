@@ -24,10 +24,7 @@ class OrdersView extends GetView<OrdersController> {
             expandedHeight: 160,
             pinned: true,
             backgroundColor: AppColors.primary,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-              onPressed: () => Get.back(),
-            ),
+            automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(
@@ -58,7 +55,7 @@ class OrdersView extends GetView<OrdersController> {
               child: Container(
                 color: AppColors.primary,
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-                child: Obx(() => Row(
+                child: Row(
                   children: [
                     _Tab('All', 0, controller),
                     const SizedBox(width: 8),
@@ -66,7 +63,7 @@ class OrdersView extends GetView<OrdersController> {
                     const SizedBox(width: 8),
                     _Tab('Past', 2, controller),
                   ],
-                )),
+                ),
               ),
             ),
           ),
@@ -105,21 +102,23 @@ class _Tab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selected = controller.selectedTab.value == index;
-    return GestureDetector(
-      onTap: () => controller.selectTab(index),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-        decoration: BoxDecoration(
-          color: selected ? Colors.white : Colors.white.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(20),
+    return Obx(() {
+      final selected = controller.selectedTab.value == index;
+      return GestureDetector(
+        onTap: () => controller.selectTab(index),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+          decoration: BoxDecoration(
+            color: selected ? Colors.white : Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(label, style: TextStyle(
+            fontFamily: 'Poppins', fontSize: 12, fontWeight: FontWeight.w600,
+            color: selected ? AppColors.primary : Colors.white,
+          )),
         ),
-        child: Text(label, style: TextStyle(
-          fontFamily: 'Poppins', fontSize: 12, fontWeight: FontWeight.w600,
-          color: selected ? AppColors.primary : Colors.white,
-        )),
-      ),
-    );
+      );
+    });
   }
 }
 

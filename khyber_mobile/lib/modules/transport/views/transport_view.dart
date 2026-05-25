@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/transport_controller.dart';
@@ -143,13 +143,13 @@ class _BookingView extends GetView<TransportController> {
         const SizedBox(height: 12),
         SizedBox(
           height: 110,
-          child: Obx(() => ListView.separated(
+          child: Obx(() { final selType = controller.selectedType.value; return ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: controller.vehicleTypes.length,
             separatorBuilder: (_, __) => const SizedBox(width: 12),
             itemBuilder: (context, i) {
               final v = controller.vehicleTypes[i];
-              final selected = controller.selectedType.value == v.id;
+              final selected = selType == v.id;
               return GestureDetector(
                 onTap: () => controller.selectType(v.id),
                 child: AnimatedContainer(
@@ -192,7 +192,7 @@ class _BookingView extends GetView<TransportController> {
                 ),
               );
             },
-          )),
+          );}),
         ),
       ],
     );
@@ -233,7 +233,7 @@ class _BookingView extends GetView<TransportController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 const Text('Est. Fare', style: TextStyle(color: AppColors.textSecondary, fontSize: 11)),
-                Obx(() => Text('PKR ${controller.estimatedFare.toStringAsFixed(0)}',
+                Obx(() => Text('PKR ${controller.estimatedFare.value.toStringAsFixed(0)}',
                     style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 18))),
               ],
             ),
@@ -262,14 +262,14 @@ class _BookingView extends GetView<TransportController> {
   }
 
   Widget _buildNearbyDrivers() {
-    return Obx(() => Column(
+    return Column(
       children: controller.nearbyDrivers
           .map((d) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _DriverCard(driver: d),
               ))
           .toList(),
-    ));
+    );
   }
 }
 
@@ -423,7 +423,7 @@ class _BookedView extends GetView<TransportController> {
                         children: [
                           Expanded(child: _StatBox(label: 'ETA', value: '${driver.etaMinutes} min', icon: Icons.access_time_rounded, color: AppColors.primary)),
                           const SizedBox(width: 16),
-                          Expanded(child: _StatBox(label: 'Fare', value: 'PKR ${controller.estimatedFare.toStringAsFixed(0)}', icon: Icons.payments_rounded, color: AppColors.accent)),
+                          Expanded(child: _StatBox(label: 'Fare', value: 'PKR ${controller.estimatedFare.value.toStringAsFixed(0)}', icon: Icons.payments_rounded, color: AppColors.accent)),
                         ],
                       ),
                       const SizedBox(height: 20),

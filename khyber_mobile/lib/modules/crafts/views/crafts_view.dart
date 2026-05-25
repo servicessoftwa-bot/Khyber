@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/crafts_controller.dart';
@@ -24,14 +24,14 @@ class CraftsView extends GetView<CraftsController> {
             ]))))),
           bottom: PreferredSize(preferredSize: const Size.fromHeight(44), child: Container(
             color: AppColors.gold, padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-            child: SizedBox(height: 32, child: Obx(() => ListView.separated(
+            child: SizedBox(height: 32, child: Obx(() { final sel = controller.selectedCraft.value; return ListView.separated(
               scrollDirection: Axis.horizontal, itemCount: controller.crafts.length, separatorBuilder: (_, __) => const SizedBox(width: 8),
-              itemBuilder: (_, i) { final c = controller.crafts[i]; final sel = controller.selectedCraft.value == c;
+              itemBuilder: (_, i) { final c = controller.crafts[i]; final isSelected = sel == c;
                 return GestureDetector(onTap: () => controller.selectedCraft.value = c, child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                  decoration: BoxDecoration(color: sel ? Colors.white : Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(20)),
-                  child: Text(c, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: sel ? AppColors.gold : Colors.white)))); },
-            ))),
+                  decoration: BoxDecoration(color: isSelected ? Colors.white : Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(20)),
+                  child: Text(c, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: isSelected ? AppColors.gold : Colors.white)))); },
+            );})),
           )),
         ),
         Obx(() { final items = controller.filteredProducts;

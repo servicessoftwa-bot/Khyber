@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/tourism_controller.dart';
@@ -34,17 +34,17 @@ class TourismView extends GetView<TourismController> {
                 decoration: const InputDecoration(hintText: 'Search destinations...', hintStyle: TextStyle(color: Colors.white60), prefixIcon: Icon(Icons.search_rounded, color: Colors.white60, size: 20), border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 10)))),
           )),
         ),
-        SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 14, hPad, 4), child: SizedBox(height: 36, child: Obx(() => ListView.separated(
+        SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 14, hPad, 4), child: SizedBox(height: 36, child: Obx(() { final sel = controller.selectedCategory.value; return ListView.separated(
           scrollDirection: Axis.horizontal, itemCount: controller.categories.length, separatorBuilder: (_, __) => const SizedBox(width: 8),
-          itemBuilder: (_, i) { final cat = controller.categories[i]; final sel = controller.selectedCategory.value == cat;
+          itemBuilder: (_, i) { final cat = controller.categories[i]; final isSelected = sel == cat;
             return GestureDetector(onTap: () => controller.selectedCategory.value = cat, child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(color: sel ? AppColors.accent : Colors.white, borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: sel ? AppColors.accent : AppColors.border),
-                boxShadow: sel ? [BoxShadow(color: AppColors.accent.withOpacity(0.3), blurRadius: 8)] : []),
-              child: Text(cat, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sel ? Colors.white : AppColors.textSecondary)))); },
-        ))))),
+              decoration: BoxDecoration(color: isSelected ? AppColors.accent : Colors.white, borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: isSelected ? AppColors.accent : AppColors.border),
+                boxShadow: isSelected ? [BoxShadow(color: AppColors.accent.withOpacity(0.3), blurRadius: 8)] : []),
+              child: Text(cat, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isSelected ? Colors.white : AppColors.textSecondary)))); },
+        );})))),
         Obx(() { final spots = controller.filteredSpots;
           if (cols == 1) {
             return SliverPadding(
