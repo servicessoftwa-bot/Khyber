@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/transport_controller.dart';
@@ -142,7 +142,7 @@ class _BookingView extends GetView<TransportController> {
                 fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
         const SizedBox(height: 12),
         SizedBox(
-          height: 110,
+          height: 120,
           child: Obx(() { final selType = controller.selectedType.value; return ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: controller.vehicleTypes.length,
@@ -155,7 +155,7 @@ class _BookingView extends GetView<TransportController> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   width: 90,
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   decoration: BoxDecoration(
                     color: selected ? AppColors.primary : Colors.white,
                     borderRadius: BorderRadius.circular(16),
