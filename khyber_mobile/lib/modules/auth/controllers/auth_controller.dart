@@ -27,7 +27,7 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       await Future.delayed(const Duration(seconds: 1));
-      final isAdmin = email.trim().toLowerCase() == 'admin@khyber.pk' && password == 'Admin@123';
+      final isAdmin = email.trim().toLowerCase() == 'admin@khyberapp.pk' && password == 'Admin@123';
       _box.write('access_token', isAdmin ? 'admin_token' : 'mock_token');
       _box.write('user', {
         'name': isAdmin ? 'Admin' : 'KPK User',
