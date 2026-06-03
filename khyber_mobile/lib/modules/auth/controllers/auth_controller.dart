@@ -27,8 +27,13 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       await Future.delayed(const Duration(seconds: 1));
-      _box.write('access_token', 'mock_token');
-      _box.write('user', {'name': 'KPK User', 'email': email});
+      final isAdmin = email.trim().toLowerCase() == 'admin@khyber.pk' && password == 'Admin@123';
+      _box.write('access_token', isAdmin ? 'admin_token' : 'mock_token');
+      _box.write('user', {
+        'name': isAdmin ? 'Admin' : 'KPK User',
+        'email': email.trim().toLowerCase(),
+        'isAdmin': isAdmin,
+      });
       isLoggedIn.value = true;
       Get.offAllNamed(AppRoutes.home);
     } finally {
@@ -41,7 +46,7 @@ class AuthController extends GetxController {
     try {
       await Future.delayed(const Duration(seconds: 1));
       _box.write('access_token', 'mock_token');
-      _box.write('user', {'name': name, 'email': email, 'phone': phone});
+      _box.write('user', {'name': name, 'email': email, 'phone': phone, 'isAdmin': false});
       isLoggedIn.value = true;
       Get.offAllNamed(AppRoutes.home);
     } finally {

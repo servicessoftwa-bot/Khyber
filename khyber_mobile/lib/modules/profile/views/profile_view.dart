@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../app/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/profile_controller.dart';
 import '../../orders/views/orders_view.dart';
@@ -98,6 +99,14 @@ class ProfileView extends GetView<ProfileController> {
                   _MenuItem(Icons.info_outline_rounded, 'About Khyber App', 'Version 1.0.0', AppColors.textSecondary, () {}),
                 ]),
                 const SizedBox(height: 16),
+
+                // Admin Dashboard (only for admin users)
+                if (controller.isAdmin) ...[
+                  _MenuSection('Administration', [
+                    _MenuItem(Icons.dashboard_rounded, 'Admin Dashboard', 'Users, orders, revenue & vendors', const Color(0xFF0D3B42), () => Get.toNamed(AppRoutes.admin)),
+                  ]),
+                  const SizedBox(height: 16),
+                ],
 
                 // Logout
                 Container(
