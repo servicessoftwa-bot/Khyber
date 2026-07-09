@@ -159,6 +159,21 @@ class _HomeTab extends StatelessWidget {
     {'icon': Icons.warning_amber_rounded,     'label': 'Emergency',   'color': 0xFFC0392B, 'route': AppRoutes.emergency},
   ];
 
+  static const _kpkServices = [
+    {'icon': Icons.electric_bolt_rounded,     'label': 'Load Shedding','color': 0xFFE67E22, 'route': AppRoutes.loadShedding},
+    {'icon': Icons.agriculture_rounded,       'label': 'Agriculture',  'color': 0xFF27AE60, 'route': AppRoutes.agriculture},
+    {'icon': Icons.pets_rounded,              'label': 'Livestock',    'color': 0xFF8B4513, 'route': AppRoutes.livestock},
+    {'icon': Icons.directions_bus_rounded,    'label': 'BRT Peshawar', 'color': 0xFF2980B9, 'route': AppRoutes.brt},
+    {'icon': Icons.villa_rounded,             'label': 'Marriage Halls','color': 0xFFD4A017,'route': AppRoutes.marriageHalls},
+    {'icon': Icons.eco_rounded,               'label': 'Dry Fruits',   'color': 0xFFB7410E, 'route': AppRoutes.dryFruits},
+    {'icon': Icons.diamond_rounded,           'label': 'Gemstones',    'color': 0xFF1A6B72, 'route': AppRoutes.gemstones},
+    {'icon': Icons.terrain_rounded,           'label': 'Marble',       'color': 0xFF7F8C8D, 'route': AppRoutes.marble},
+    {'icon': Icons.account_balance_rounded,   'label': 'Gandhara',     'color': 0xFF8E6B00, 'route': AppRoutes.gandhara},
+    {'icon': Icons.sports_cricket_rounded,    'label': 'Sports',       'color': 0xFF16A085, 'route': AppRoutes.sports},
+    {'icon': Icons.receipt_long_outlined,     'label': 'Utility Bills', 'color': 0xFF2C3E50, 'route': AppRoutes.utilityBills},
+    {'icon': Icons.flood_rounded,             'label': 'Flood Alerts', 'color': 0xFF2471A3, 'route': AppRoutes.floodAlerts},
+  ];
+
   @override
   Widget build(BuildContext context) {
     final desktop = _isDesktop(context);
@@ -169,6 +184,8 @@ class _HomeTab extends StatelessWidget {
       SliverToBoxAdapter(child: desktop ? _maxWidth(_buildServicesGrid(_quickServices, context)) : _buildServicesGrid(_quickServices, context)),
       SliverToBoxAdapter(child: desktop ? _maxWidth(_buildSectionTitle('More Services')) : _buildSectionTitle('More Services')),
       SliverToBoxAdapter(child: desktop ? _maxWidth(_buildServicesGrid(_moreServices, context)) : _buildServicesGrid(_moreServices, context)),
+      SliverToBoxAdapter(child: desktop ? _maxWidth(_buildSectionTitle('KPK Specials')) : _buildSectionTitle('KPK Specials')),
+      SliverToBoxAdapter(child: desktop ? _maxWidth(_buildServicesGrid(_kpkServices, context)) : _buildServicesGrid(_kpkServices, context)),
       SliverToBoxAdapter(child: desktop ? _maxWidth(_buildKPKHighlights()) : _buildKPKHighlights()),
       const SliverToBoxAdapter(child: SizedBox(height: 32)),
     ]);

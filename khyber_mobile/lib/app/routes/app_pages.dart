@@ -60,6 +60,30 @@ import '../../modules/hotels/views/hotels_view.dart';
 import '../../modules/hotels/bindings/hotels_binding.dart';
 import '../../modules/home_nursing/views/home_nursing_view.dart';
 import '../../modules/home_nursing/bindings/home_nursing_binding.dart';
+import '../../modules/load_shedding/views/load_shedding_view.dart';
+import '../../modules/load_shedding/bindings/load_shedding_binding.dart';
+import '../../modules/agriculture/views/agriculture_view.dart';
+import '../../modules/agriculture/bindings/agriculture_binding.dart';
+import '../../modules/livestock/views/livestock_view.dart';
+import '../../modules/livestock/bindings/livestock_binding.dart';
+import '../../modules/brt/views/brt_view.dart';
+import '../../modules/brt/bindings/brt_binding.dart';
+import '../../modules/marriage_halls/views/marriage_halls_view.dart';
+import '../../modules/marriage_halls/bindings/marriage_halls_binding.dart';
+import '../../modules/dry_fruits/views/dry_fruits_view.dart';
+import '../../modules/dry_fruits/bindings/dry_fruits_binding.dart';
+import '../../modules/gemstones/views/gemstones_view.dart';
+import '../../modules/gemstones/bindings/gemstones_binding.dart';
+import '../../modules/marble/views/marble_view.dart';
+import '../../modules/marble/bindings/marble_binding.dart';
+import '../../modules/gandhara/views/gandhara_view.dart';
+import '../../modules/gandhara/bindings/gandhara_binding.dart';
+import '../../modules/sports/views/sports_view.dart';
+import '../../modules/sports/bindings/sports_binding.dart';
+import '../../modules/utility_bills/views/utility_bills_view.dart';
+import '../../modules/utility_bills/bindings/utility_bills_binding.dart';
+import '../../modules/flood_alerts/views/flood_alerts_view.dart';
+import '../../modules/flood_alerts/bindings/flood_alerts_binding.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -97,6 +121,18 @@ class AppPages {
     GetPage(name: AppRoutes.notifications,page: () => const NotificationsView(), binding: NotificationsBinding()),
     GetPage(name: AppRoutes.waterGas,    page: () => const WaterGasView(),    binding: WaterGasBinding()),
     GetPage(name: AppRoutes.hotels,      page: () => const HotelsView(),      binding: HotelsBinding()),
-    GetPage(name: AppRoutes.homeNursing, page: () => const HomeNursingView(), binding: HomeNursingBinding()),
+    GetPage(name: AppRoutes.homeNursing,   page: () => const HomeNursingView(),   binding: HomeNursingBinding()),
+    GetPage(name: AppRoutes.loadShedding,  page: () => const LoadSheddingView(),  binding: LoadSheddingBinding()),
+    GetPage(name: AppRoutes.agriculture,   page: () => const AgricultureView(),   binding: AgricultureBinding()),
+    GetPage(name: AppRoutes.livestock,     page: () => const LivestockView(),     binding: LivestockBinding()),
+    GetPage(name: AppRoutes.brt,           page: () => const BrtView(),           binding: BrtBinding()),
+    GetPage(name: AppRoutes.marriageHalls, page: () => const MarriageHallsView(), binding: MarriageHallsBinding()),
+    GetPage(name: AppRoutes.dryFruits,     page: () => const DryFruitsView(),     binding: DryFruitsBinding()),
+    GetPage(name: AppRoutes.gemstones,     page: () => const GemstonesView(),     binding: GemstonesBinding()),
+    GetPage(name: AppRoutes.marble,        page: () => const MarbleView(),        binding: MarbleBinding()),
+    GetPage(name: AppRoutes.gandhara,      page: () => const GandharaView(),      binding: GandharaBinding()),
+    GetPage(name: AppRoutes.sports,        page: () => const SportsView(),        binding: SportsBinding()),
+    GetPage(name: AppRoutes.utilityBills,  page: () => const UtilityBillsView(),  binding: UtilityBillsBinding()),
+    GetPage(name: AppRoutes.floodAlerts,   page: () => const FloodAlertsView(),   binding: FloodAlertsBinding()),
   ];
 }

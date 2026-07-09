@@ -49,4 +49,18 @@ abstract class AppRoutes {
   static const String hotelDetail   = '/hotels/detail';
   static const String homeNursing    = '/home-nursing';
   static const String admin         = '/admin';
+
+  // KPK Specials
+  static const String loadShedding  = '/load-shedding';
+  static const String agriculture   = '/agriculture';
+  static const String livestock     = '/livestock';
+  static const String brt           = '/brt';
+  static const String marriageHalls = '/marriage-halls';
+  static const String dryFruits     = '/dry-fruits';
+  static const String gemstones     = '/gemstones';
+  static const String marble        = '/marble';
+  static const String gandhara      = '/gandhara';
+  static const String sports        = '/sports';
+  static const String utilityBills  = '/utility-bills';
+  static const String floodAlerts   = '/flood-alerts';
 }
