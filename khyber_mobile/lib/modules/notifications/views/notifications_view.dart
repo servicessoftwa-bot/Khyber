@@ -7,7 +7,7 @@ class NotificationsView extends GetView<NotificationsController> {
   const NotificationsView({super.key});
 
   static const _typeConfig = {
-    'order':   {'color': 0xFFB03A2E, 'icon': Icons.receipt_long_rounded},
+    'order':   {'color': 0xFF1A4D2E, 'icon': Icons.receipt_long_rounded},
     'courier': {'color': 0xFF8E44AD, 'icon': Icons.local_shipping_rounded},
     'wallet':  {'color': 0xFF27AE60, 'icon': Icons.account_balance_wallet_rounded},
     'jobs':    {'color': 0xFF2980B9, 'icon': Icons.work_rounded},

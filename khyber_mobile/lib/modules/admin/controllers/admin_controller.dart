@@ -19,7 +19,7 @@ class AdminController extends GetxController {
 
   final stats = <AdminStat>[
     AdminStat(label: 'Total Users', value: '4,821', change: '+12%', colorValue: 0xFF1A6B72, isUp: true),
-    AdminStat(label: 'Orders Today', value: '186', change: '+8%', colorValue: 0xFFB03A2E, isUp: true),
+    AdminStat(label: 'Orders Today', value: '186', change: '+8%', colorValue: 0xFF1A4D2E, isUp: true),
     AdminStat(label: 'Revenue', value: 'PKR 92K', change: '+15%', colorValue: 0xFF27AE60, isUp: true),
     AdminStat(label: 'Active Vendors', value: '243', change: '-2%', colorValue: 0xFF8E44AD, isUp: false),
   ];

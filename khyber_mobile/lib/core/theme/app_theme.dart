@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
@@ -10,7 +10,7 @@ class AppTheme {
       displayLarge:   GoogleFonts.poppins(fontWeight: FontWeight.w900, fontSize: 57, color: AppColors.textPrimary, letterSpacing: -1.0),
       displayMedium:  GoogleFonts.poppins(fontWeight: FontWeight.w800, fontSize: 45, color: AppColors.textPrimary),
       displaySmall:   GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 36, color: AppColors.textPrimary),
-      headlineLarge:  GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 32, color: AppColors.textPrimary),
+      headlineLarge:  GoogleFonts.poppins(fontWeight: FontWeight.w800, fontSize: 32, color: AppColors.textPrimary),
       headlineMedium: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 28, color: AppColors.textPrimary),
       titleLarge:     GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 22, color: AppColors.textPrimary),
       titleMedium:    GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 18, color: AppColors.textPrimary),
@@ -31,7 +31,7 @@ class AppTheme {
       textTheme: poppinsTextTheme,
       colorScheme: const ColorScheme.light(
         primary:     AppColors.primary,
-        secondary:   AppColors.accent,
+        secondary:   AppColors.gold,
         surface:     AppColors.surface,
         error:       AppColors.error,
         onPrimary:   Colors.white,
@@ -43,16 +43,17 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        backgroundColor: AppColors.surface,
-        foregroundColor: AppColors.textPrimary,
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 18,
           fontWeight: FontWeight.w700,
-          color: AppColors.textPrimary,
+          color: Colors.white,
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -70,7 +71,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
           minimumSize: const Size(double.infinity, 54),
-          side: const BorderSide(color: AppColors.border, width: 1.5),
+          side: const BorderSide(color: AppColors.primary, width: 1.5),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           textStyle: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600),
         ),
@@ -95,7 +96,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+          borderSide: const BorderSide(color: AppColors.gold, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -107,7 +108,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.card,
         elevation: 2,
-        shadowColor: AppColors.primary.withOpacity(0.08),
+        shadowColor: Color(0x141A4D2E),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppColors.border, width: 0.8),
@@ -137,7 +138,7 @@ class AppTheme {
         space: 0,
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.textPrimary,
+        backgroundColor: AppColors.primary,
         contentTextStyle: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         behavior: SnackBarBehavior.floating,

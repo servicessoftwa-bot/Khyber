@@ -7,7 +7,7 @@ class RealEstateView extends GetView<RealEstateController> {
   const RealEstateView({super.key});
 
   static const _listings = [
-    {'title': '3-Bed House for Sale', 'area': 'Phase 5, Hayatabad, Peshawar', 'price': 'PKR 1.8 Crore', 'type': 'Sale', 'size': '5 Marla', 'color': 0xFFB03A2E},
+    {'title': '3-Bed House for Sale', 'area': 'Phase 5, Hayatabad, Peshawar', 'price': 'PKR 1.8 Crore', 'type': 'Sale', 'size': '5 Marla', 'color': 0xFF1A4D2E},
     {'title': '2-Bed Apartment for Rent', 'area': 'University Road, Peshawar', 'price': 'PKR 35,000/mo', 'type': 'Rent', 'size': '950 sqft', 'color': 0xFF2980B9},
     {'title': 'Commercial Shop Available', 'area': 'Saddar Bazaar, Peshawar', 'price': 'PKR 60,000/mo', 'type': 'Rent', 'size': '400 sqft', 'color': 0xFF27AE60},
     {'title': 'Plot for Sale', 'area': 'Abbottabad City', 'price': 'PKR 45 Lakh', 'type': 'Sale', 'size': '4 Marla', 'color': 0xFF8E44AD},

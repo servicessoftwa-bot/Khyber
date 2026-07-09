@@ -35,7 +35,7 @@ class HotelsView extends StatelessWidget {
               background: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF1A6B72), Color(0xFFB03A2E)],
+                    colors: [Color(0xFF1A6B72), Color(0xFF1A4D2E)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -124,7 +124,7 @@ class _PropertyList extends StatelessWidget {
     'hotel':      Color(0xFF1A6B72),
     'resort':     Color(0xFF16A085),
     'villa':      Color(0xFFD4A017),
-    'guesthouse': Color(0xFFB03A2E),
+    'guesthouse': Color(0xFF1A4D2E),
   };
 
   @override
