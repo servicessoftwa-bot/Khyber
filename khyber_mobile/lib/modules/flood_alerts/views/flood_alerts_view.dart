@@ -35,19 +35,17 @@ class FloodAlertsView extends GetView<FloodAlertsController> {
             ),
           ),
         ),
-        SliverToBoxAdapter(child: Obx(() {
+        SliverToBoxAdapter(child: Builder(builder: (context) {
           final criticalCount = controller.criticalCount;
-          if (criticalCount > 0) {
-            return Container(margin: EdgeInsets.fromLTRB(hPad, 12, hPad, 0),
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.red.shade200)),
-              child: Row(children: [
-                const Icon(Icons.warning_amber_rounded, color: Colors.red, size: 22),
-                const SizedBox(width: 10),
-                Expanded(child: Text('$criticalCount CRITICAL flood alert(s) in KPK. Stay away from riverbanks.', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.red, fontFamily: 'Poppins'))),
-              ]));
-          }
-          return const SizedBox.shrink();
+          if (criticalCount == 0) return const SizedBox.shrink();
+          return Container(margin: EdgeInsets.fromLTRB(hPad, 12, hPad, 0),
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.red.shade200)),
+            child: Row(children: [
+              const Icon(Icons.warning_amber_rounded, color: Colors.red, size: 22),
+              const SizedBox(width: 10),
+              Expanded(child: Text('$criticalCount CRITICAL flood alert(s) in KPK. Stay away from riverbanks.', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.red, fontFamily: 'Poppins'))),
+            ]));
         })),
         SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 8), child: const Text('River Alerts', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary, fontFamily: 'Poppins')))),
         SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 0, hPad, 0), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {

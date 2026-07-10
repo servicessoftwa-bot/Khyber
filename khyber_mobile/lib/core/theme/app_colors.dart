@@ -28,7 +28,7 @@ class AppColors {
   static const Color textHint      = Color(0xFFAEAEB2);
 
   // Backgrounds — very slight green-white tint
-  static const Color background = Color(0xFFF7FAF7);
+  static const Color background = Color(0xFFF0F4F0);
   static const Color surface    = Color(0xFFFFFFFF);
   static const Color card       = Color(0xFFFFFFFF);
 
