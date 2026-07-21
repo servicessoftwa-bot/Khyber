@@ -43,8 +43,9 @@ class SportsView extends GetView<SportsController> {
           ),
         ),
         SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 0), child: const Text('Teams', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary, fontFamily: 'Poppins')))),
-        Obx(() { final teams = controller.teams;
-          return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 10, hPad, 0), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
+        SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 10, hPad, 0), sliver: Builder(builder: (context) {
+          final teams = controller.teams;
+          return SliverList(delegate: SliverChildBuilderDelegate((context, i) {
             final team = teams[i];
             return Container(margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)]),
@@ -67,11 +68,12 @@ class SportsView extends GetView<SportsController> {
                   Text('Pts: ${team.points}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: _green, fontFamily: 'Poppins')),
                 ]),
               ])));
-          }, childCount: teams.length)));
-        }),
+          }, childCount: teams.length));
+        })),
         SliverToBoxAdapter(child: Padding(padding: EdgeInsets.fromLTRB(hPad, 20, hPad, 0), child: const Text('Upcoming Events', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary, fontFamily: 'Poppins')))),
-        Obx(() { final events = controller.events;
-          return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 10, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
+        SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 10, hPad, 24), sliver: Builder(builder: (context) {
+          final events = controller.events;
+          return SliverList(delegate: SliverChildBuilderDelegate((context, i) {
             final e = events[i];
             return Container(margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)]),
@@ -85,8 +87,8 @@ class SportsView extends GetView<SportsController> {
                   Text('${e.date} • ${e.time}', style: const TextStyle(fontSize: 11, color: _green, fontWeight: FontWeight.w600, fontFamily: 'Poppins')),
                 ])),
               ])));
-          }, childCount: events.length)));
-        }),
+          }, childCount: events.length));
+        })),
       ]),
     );
   }

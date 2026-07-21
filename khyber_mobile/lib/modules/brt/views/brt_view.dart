@@ -28,8 +28,9 @@ class BrtView extends GetView<BrtController> {
             ),
           ),
         ),
-        Obx(() { final routes = controller.routes;
-          return SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), sliver: SliverList(delegate: SliverChildBuilderDelegate((context, i) {
+        SliverPadding(padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24), sliver: Builder(builder: (context) {
+          final routes = controller.routes;
+          return SliverList(delegate: SliverChildBuilderDelegate((context, i) {
             final route = routes[i];
             final routeColor = Color(int.parse(route.color));
             return Container(margin: const EdgeInsets.only(bottom: 16),
@@ -63,8 +64,8 @@ class BrtView extends GetView<BrtController> {
                   )),
                 ])),
               ]));
-          }, childCount: routes.length)));
-        }),
+          }, childCount: routes.length));
+        })),
       ]),
     );
   }
