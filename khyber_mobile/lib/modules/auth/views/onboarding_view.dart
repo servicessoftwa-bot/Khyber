@@ -40,7 +40,7 @@ class _OnboardingViewState extends State<OnboardingView> {
       _controller.nextPage(duration: const Duration(milliseconds: 350), curve: Curves.easeInOut);
     } else {
       GetStorage().write('onboarding_seen', true);
-      Get.offAllNamed(AppRoutes.login);
+      Get.offAllNamed(AppRoutes.home);
     }
   }
 
@@ -56,7 +56,7 @@ class _OnboardingViewState extends State<OnboardingView> {
               child: TextButton(
                 onPressed: () {
                   GetStorage().write('onboarding_seen', true);
-                  Get.offAllNamed(AppRoutes.login);
+                  Get.offAllNamed(AppRoutes.home);
                 },
                 child: const Text('Skip', style: TextStyle(color: AppColors.textSecondary)),
               ),

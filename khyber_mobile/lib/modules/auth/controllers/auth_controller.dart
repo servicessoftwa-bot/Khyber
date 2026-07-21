@@ -14,12 +14,11 @@ class AuthController extends GetxController {
   }
 
   Future<void> checkAuth() async {
-    final token = _box.read('access_token');
-    if (token != null) {
-      Get.offAllNamed(AppRoutes.home);
+    final seen = _box.read('onboarding_seen') ?? false;
+    if (!seen) {
+      Get.offAllNamed(AppRoutes.onboarding);
     } else {
-      final seen = _box.read('onboarding_seen') ?? false;
-      Get.offAllNamed(seen ? AppRoutes.login : AppRoutes.onboarding);
+      Get.offAllNamed(AppRoutes.home);
     }
   }
 
