@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/marble_controller.dart';
 
@@ -54,9 +55,11 @@ class MarbleView extends GetView<MarbleController> {
               final item = list[i];
               return Container(decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8)]),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Container(height: 90, decoration: BoxDecoration(color: _slate.withValues(alpha: 0.1), borderRadius: const BorderRadius.vertical(top: Radius.circular(14))),
-                    child: Stack(children: [
-                      Center(child: Text(item.emoji, style: const TextStyle(fontSize: 40))),
+                  ClipRRect(borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+                    child: Stack(fit: StackFit.passthrough, children: [
+                      CachedNetworkImage(imageUrl: item.image, height: 90, width: double.infinity, fit: BoxFit.cover,
+                        placeholder: (_, __) => Container(height: 90, color: _slate.withValues(alpha: 0.1), child: Center(child: Text(item.emoji, style: const TextStyle(fontSize: 40)))),
+                        errorWidget: (_, __, ___) => Container(height: 90, color: _slate.withValues(alpha: 0.1), child: Center(child: Text(item.emoji, style: const TextStyle(fontSize: 40))))),
                       if (!item.available) Positioned(top: 8, right: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: Colors.red.withValues(alpha: 0.9), borderRadius: BorderRadius.circular(10)),
                         child: const Text('Out', style: TextStyle(fontSize: 9, color: Colors.white, fontWeight: FontWeight.bold)))),
                     ])),

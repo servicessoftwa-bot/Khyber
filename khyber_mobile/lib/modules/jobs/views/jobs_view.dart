@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/jobs_controller.dart';
 
@@ -99,8 +100,16 @@ class _JobCard extends StatelessWidget {
         boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.07), blurRadius: 10, offset: const Offset(0, 4))]),
       child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Container(width: 44, height: 44, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(12)),
-            child: Center(child: Text(job.company[0], style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 20)))),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              imageUrl: job.image, width: 52, height: 52, fit: BoxFit.cover,
+              placeholder: (_, __) => Container(width: 52, height: 52, color: AppColors.primaryLight,
+                child: Center(child: Text(job.company[0], style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 20)))),
+              errorWidget: (_, __, ___) => Container(width: 52, height: 52, color: AppColors.primaryLight,
+                child: Center(child: Text(job.company[0], style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 20)))),
+            ),
+          ),
           const SizedBox(width: 12),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(job.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.textPrimary)),

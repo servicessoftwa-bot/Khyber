@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/businesses_controller.dart';
 
@@ -164,12 +165,22 @@ class _BusinessCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(children: [
-            Container(width: 48, height: 48,
-              decoration: BoxDecoration(color: _catColor.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
-              child: Icon(Icons.business_rounded, size: 26, color: _catColor),
+          // Photo banner
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            child: CachedNetworkImage(
+              imageUrl: biz.image,
+              height: 130, width: double.infinity, fit: BoxFit.cover,
+              placeholder: (_, __) => Container(height: 130, color: _catColor.withOpacity(0.15),
+                child: Center(child: Icon(Icons.business_rounded, size: 40, color: _catColor.withOpacity(0.4)))),
+              errorWidget: (_, __, ___) => Container(height: 130, color: _catColor.withOpacity(0.15),
+                child: Center(child: Icon(Icons.business_rounded, size: 40, color: _catColor.withOpacity(0.4)))),
             ),
-            const SizedBox(width: 12),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(children: [
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(child: Text(biz.name,
@@ -232,7 +243,8 @@ class _BusinessCard extends StatelessWidget {
               ),
             ),
           ]),
-        ],
+        ])),
+      ],
       ),
     );
   }

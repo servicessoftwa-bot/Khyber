@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/agriculture_controller.dart';
 
@@ -57,8 +58,10 @@ class AgricultureView extends GetView<AgricultureController> {
             return Container(margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8)]),
               child: Padding(padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12), child: Row(children: [
-                Container(width: 44, height: 44, decoration: BoxDecoration(color: _green.withOpacity(0.08), borderRadius: BorderRadius.circular(12)),
-                  child: Center(child: Text(c.emoji, style: const TextStyle(fontSize: 22)))),
+                ClipRRect(borderRadius: BorderRadius.circular(12),
+                  child: CachedNetworkImage(imageUrl: c.image, width: 56, height: 56, fit: BoxFit.cover,
+                    placeholder: (_, __) => Container(width: 56, height: 56, color: _green.withOpacity(0.08), child: Center(child: Text(c.emoji, style: const TextStyle(fontSize: 24)))),
+                    errorWidget: (_, __, ___) => Container(width: 56, height: 56, color: _green.withOpacity(0.08), child: Center(child: Text(c.emoji, style: const TextStyle(fontSize: 24)))))),
                 const SizedBox(width: 12),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(c.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary, fontFamily: 'Poppins')),

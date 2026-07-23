@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/gemstones_controller.dart';
 
@@ -52,8 +53,7 @@ class GemstonesView extends GetView<GemstonesController> {
             return Container(margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)]),
               child: Padding(padding: const EdgeInsets.all(14), child: Row(children: [
-                Container(width: 56, height: 56, decoration: BoxDecoration(color: _teal.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(14), border: Border.all(color: _teal.withValues(alpha: 0.2))),
-                  child: Center(child: Text(gem.emoji, style: const TextStyle(fontSize: 28)))),
+                ClipRRect(borderRadius: BorderRadius.circular(14), child: CachedNetworkImage(imageUrl: gem.image, width: 64, height: 64, fit: BoxFit.cover, placeholder: (_, __) => Container(width: 64, height: 64, color: _teal.withValues(alpha: 0.1), child: Center(child: Text(gem.emoji, style: const TextStyle(fontSize: 28)))), errorWidget: (_, __, ___) => Container(width: 64, height: 64, color: _teal.withValues(alpha: 0.1), child: Center(child: Text(gem.emoji, style: const TextStyle(fontSize: 28)))))),
                 const SizedBox(width: 12),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(gem.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.textPrimary, fontFamily: 'Poppins')),

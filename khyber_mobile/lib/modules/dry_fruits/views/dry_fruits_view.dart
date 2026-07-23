@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controllers/dry_fruits_controller.dart';
 
@@ -53,14 +54,17 @@ class DryFruitsView extends GetView<DryFruitsController> {
             delegate: SliverChildBuilderDelegate((context, i) {
               final item = list[i];
               return Container(decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8)]),
-                child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [
-                    Text(item.emoji, style: const TextStyle(fontSize: 32)),
-                    const Spacer(),
-                    if (!item.inStock) Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: Colors.red.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
-                      child: const Text('Out', style: TextStyle(fontSize: 9, color: Colors.red, fontWeight: FontWeight.bold))),
-                  ]),
-                  const SizedBox(height: 8),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  ClipRRect(borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+                    child: Stack(fit: StackFit.passthrough, children: [
+                      CachedNetworkImage(imageUrl: item.image, height: 90, width: double.infinity, fit: BoxFit.cover,
+                        placeholder: (_, __) => Container(height: 90, color: _rust.withOpacity(0.08), child: Center(child: Text(item.emoji, style: const TextStyle(fontSize: 36)))),
+                        errorWidget: (_, __, ___) => Container(height: 90, color: _rust.withOpacity(0.08), child: Center(child: Text(item.emoji, style: const TextStyle(fontSize: 36))))),
+                      if (!item.inStock) Positioned(top: 8, right: 8, child: Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: Colors.red.withOpacity(0.9), borderRadius: BorderRadius.circular(10)),
+                        child: const Text('Out', style: TextStyle(fontSize: 9, color: Colors.white, fontWeight: FontWeight.bold)))),
+                    ])),
+                  Padding(padding: const EdgeInsets.all(10), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  const SizedBox(height: 2),
                   Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.textPrimary, fontFamily: 'Poppins'), maxLines: 1, overflow: TextOverflow.ellipsis),
                   Text(item.origin, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary, fontFamily: 'Poppins')),
                   Text(item.seller, style: const TextStyle(fontSize: 10, color: AppColors.textSecondary, fontFamily: 'Poppins'), maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -70,7 +74,8 @@ class DryFruitsView extends GetView<DryFruitsController> {
                   ]),
                   const SizedBox(height: 6),
                   Text('PKR ${item.pricePerKg.toInt()}/kg', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: _rust, fontFamily: 'Poppins')),
-                ])));
+                ])),
+                ]));
             }, childCount: list.length)));
         }),
       ]),
