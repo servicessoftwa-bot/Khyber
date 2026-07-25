@@ -148,6 +148,8 @@ class _BusinessCard extends StatelessWidget {
       case 'Education': return const Color(0xFF27AE60);
       case 'Tech': return const Color(0xFF1A6B72);
       case 'Crafts': return const Color(0xFFD4A017);
+      case 'Hotels': return const Color(0xFF8B4513);
+      case 'Transport': return const Color(0xFF1A3C6B);
       default: return AppColors.textSecondary;
     }
   }
